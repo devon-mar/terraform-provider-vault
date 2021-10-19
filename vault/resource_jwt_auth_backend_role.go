@@ -122,6 +122,11 @@ func jwtAuthBackendRoleResource() *schema.Resource {
 				return strings.Trim(v.(string), "/")
 			},
 		},
+		"max_age": {
+			Type:        schema.TypeInt,
+			Optional:    true,
+			Description: "Specifies the allowable elapsed time in seconds since the last time the user was actively authenticated with the OIDC provider. If set, the \"max_age\" request parameter will be included in the authentication request.",
+		},
 	}
 
 	addTokenFields(fields, &addTokenFieldsConfig{})
@@ -268,6 +273,9 @@ func jwtAuthBackendRoleRead(d *schema.ResourceData, meta interface{}) error {
 	}
 	if v, ok := resp.Data["verbose_oidc_logging"]; ok {
 		d.Set("verbose_oidc_logging", v)
+	}
+	if v, ok := resp.Data["max_age"]; ok {
+		d.Set("max_age", v)
 	}
 
 	d.Set("backend", backend)
@@ -421,6 +429,7 @@ func jwtAuthBackendRoleDataToWrite(d *schema.ResourceData, create bool) map[stri
 	data["clock_skew_leeway"] = d.Get("clock_skew_leeway").(int)
 	data["expiration_leeway"] = d.Get("expiration_leeway").(int)
 	data["not_before_leeway"] = d.Get("not_before_leeway").(int)
+	data["max_age"] = d.Get("max_Age").(int)
 
 	data["verbose_oidc_logging"] = d.Get("verbose_oidc_logging").(bool)
 

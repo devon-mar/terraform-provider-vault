@@ -67,6 +67,8 @@ func TestAccJWTAuthBackendRole_import(t *testing.T) {
 						"not_before_leeway", "120"),
 					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
 						"verbose_oidc_logging", "true"),
+					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
+						"max_age", "1"),
 				),
 			},
 			{
@@ -251,6 +253,8 @@ func TestAccJWTAuthBackendRole_full(t *testing.T) {
 						"not_before_leeway", "120"),
 					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
 						"verbose_oidc_logging", "true"),
+					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
+						"max_age", "1"),
 				),
 			},
 		},
@@ -321,6 +325,8 @@ func TestAccJWTAuthBackendRoleOIDC_full(t *testing.T) {
 						"claim_mappings.preferred_language", "language"),
 					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
 						"verbose_oidc_logging", "true"),
+					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
+						"max_age", "1"),
 				),
 			},
 		},
@@ -383,6 +389,8 @@ func TestAccJWTAuthBackendRole_fullUpdate(t *testing.T) {
 						"not_before_leeway", "120"),
 					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
 						"verbose_oidc_logging", "true"),
+					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
+						"max_age", "1"),
 				),
 			},
 			{
@@ -438,6 +446,8 @@ func TestAccJWTAuthBackendRole_fullUpdate(t *testing.T) {
 						"not_before_leeway", "0"),
 					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
 						"verbose_oidc_logging", "false"),
+					resource.TestCheckResourceAttr("vault_jwt_auth_backend_role.role",
+						"max_age", "1"),
 				),
 			},
 		},
@@ -522,6 +532,7 @@ resource "vault_jwt_auth_backend_role" "role" {
   clock_skew_leeway = 120
   expiration_leeway = 120
   not_before_leeway = 120
+  max_age = 1
 
   verbose_oidc_logging = true
 }`, backend, role)
@@ -568,6 +579,7 @@ resource "vault_jwt_auth_backend_role" "role" {
   }
 
   verbose_oidc_logging = true
+  max_age = 1
 }`, backend, role)
 }
 
